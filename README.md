@@ -35,6 +35,21 @@ mvn clean package
 mvn exec:java -Dexec.mainClass="WebCrawler.java"
 ```
 
+####Starting a Cluster Manually
+```
+You can start a standalone master server by executing:
+
+./sbin/start-master.sh
+
+Once started, the master will print out a spark://HOST:PORT URL for itself, which you can use to connect workers to it, or pass as the “master” argument to SparkContext. You can also find this URL on the master’s web UI, which is http://localhost:8080 by default.
+Similarly, you can start one or more workers and connect them to the master via:
+
+./bin/spark-class org.apache.spark.deploy.worker.Worker spark://IP:PORT
+
+Submiting a spark Job
+bin/spark-submit foldercontainingjar/target/filename.jar
+```
+
 Start the master node using the following command
 > spark-class org.apache.spark.deploy.master.Master
 
