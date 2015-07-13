@@ -12,7 +12,14 @@ Installation
 Requirements: *JDK 7*, *Maven*, *Spark*
 
 ####with Maven
-> mvn clean install
+
+```xml
+    <dependency>
+        <groupId>edu.uci.ics</groupId>
+        <artifactId>crawler4j</artifactId>
+        <version>4.1</version>
+    </dependency>
+```
 
 Start the master node using the following command
 > spark-class org.apache.spark.deploy.master.Master
