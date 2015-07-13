@@ -11,7 +11,7 @@ Installation
 -------
 Requirements: *JDK 7*, *Maven*, *Spark*
 
-####with Maven
+####With Maven
 
 ```
 Create a root folder,navigate to that folder and perform the following
