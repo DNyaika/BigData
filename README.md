@@ -5,17 +5,13 @@ Introduction
 -------
 Web crawling using MapReduce (Apache Spark, Java7,Crawler4j API [https://github.com/yasserg/crawler4j])
 
-Crawled data in form of HTML pages is saved in mongo DB
+Crawled data in form of HTML pages is saved in mongodb
 
 Installation
 -------
 Requirements: *JDK 7*, *Maven*, *Spark*
 
-####Run with IDE
-
-Add the libraries from **sequential-libs** folder to your classpath.
-
-Clean-install application with Maven
+##with Maven
 > mvn clean install
 
 Start the master node using the following command
