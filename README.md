@@ -3,7 +3,7 @@ Web crawling with MapReduce
 
 Introduction
 -------
-Web crawling using MapReduce (Apache Spark, Java7,Crawler4j API [https://github.com/yasserg/crawler4j])
+Web crawling using MapReduce Crawler4j API https://github.com/yasserg/crawler4j is used to implement the crawler
 
 Crawled data in form of HTML pages is saved in mongodb
 
