@@ -13,24 +13,26 @@ Requirements: *JDK 7*, *Maven*, *Spark*
 
 ####with Maven
 
-```xml
- Create a root folder,navigate to that folder and perform the following
+```
+Create a root folder,navigate to that folder and perform the following
 
 mkdir -p src/main/java
 
-cat > src/main/java/WebCrawler.java 
+copy > src/main/java/com/unitn/webcrawler/BasicCrawler.java 
+copy > src/main/java/com/unitn/webcrawler/CrawlControllerImpl.java 
+copy > src/main/java/com/unitn/webcrawler/CrawledDataSource.java 
+copy > src/main/java/com/unitn/webcrawler/SparkCrawler.java 
 
-# project model (cut&paste)!
-cat > pom.xml!
+copy > pom.xml
 
-# copy a file to use for data!
-cp sample
+Copy a file to use for data
+cp seedurls
 
-# build the JAR!
-mvn clean package!
+# build the JAR
+mvn clean package
 
-# run the JAR!
-mvn exec:java -Dexec.mainClass="webcrawler"
+# run the JAR
+mvn exec:java -Dexec.mainClass="WebCrawler.java"
 ```
 
 Start the master node using the following command
