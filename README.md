@@ -14,11 +14,23 @@ Requirements: *JDK 7*, *Maven*, *Spark*
 ####with Maven
 
 ```xml
-    <dependency>
-        <groupId>edu.uci.ics</groupId>
-        <artifactId>crawler4j</artifactId>
-        <version>4.1</version>
-    </dependency>
+ Create a root folder,navigate to that folder and perform the following
+
+mkdir -p src/main/java
+
+cat > src/main/java/WebCrawler.java 
+
+# project model (cut&paste)!
+cat > pom.xml!
+
+# copy a file to use for data!
+cp sample
+
+# build the JAR!
+mvn clean package!
+
+# run the JAR!
+mvn exec:java -Dexec.mainClass="webcrawler"
 ```
 
 Start the master node using the following command
