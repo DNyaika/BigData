@@ -9,7 +9,7 @@ Sequential version of the BFS algorithm and data sets are taken from the book [A
 Introduction
 -------
 
-Web crawling using MapReduce (Apache Spark, Java7,Crawler4j API)
+Web crawling using MapReduce (Apache Spark, Java7,Crawler4j API(https://github.com/yasserg/crawler4j))
 
 Installation
 -------
