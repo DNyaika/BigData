@@ -21,7 +21,7 @@ mkdir -p src/main/java
 copy > src/main/java/com/unitn/webcrawler/BasicCrawler.java 
 copy > src/main/java/com/unitn/webcrawler/CrawlControllerImpl.java 
 copy > src/main/java/com/unitn/webcrawler/CrawledDataSource.java 
-copy > src/main/java/com/unitn/webcrawler/SparkCrawler.java 
+copy > src/main/java/com/unitn/webcrawler/WebCrawler.java
 
 copy > pom.xml
 
