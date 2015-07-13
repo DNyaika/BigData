@@ -1,5 +1,4 @@
 Implementation of web crawling with map reduce
-Breadth-first search with MapReduce
 ==============
 
 Acknowledgment
