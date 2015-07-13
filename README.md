@@ -3,7 +3,6 @@ Web crawling with MapReduce
 
 Introduction
 -------
-
 Web crawling using MapReduce (Apache Spark, Java7,Crawler4j API https://github.com/yasserg/crawler4j)
 Crawled data in form of HTML pages is saved in mongo DB
 
@@ -43,3 +42,4 @@ Submit Spark job from the JAR folder
 Documentation
 -------
 [BigData Project (PDF)](/docs/BigData_Project.pdf)
+
