@@ -9,13 +9,11 @@ Sequential version of the BFS algorithm and data sets are taken from the book [A
 Introduction
 -------
 
-Parallel Breadth-first search algorithm for undirected Graph processing using MapReduce (Apache Spark, Java)
+Web crawling using MapReduce (Apache Spark, Java7,Crawler4j API)
 
 Installation
 -------
 Requirements: *JDK 7*, *Maven*, *Spark*
-
-Configure service parameters in **service.properties** file.
 
 ####Run with IDE
 
