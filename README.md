@@ -11,7 +11,7 @@ Installation
 -------
 Requirements: *JDK 7*, *Maven*, *Spark*
 
-#with Maven
+######with Maven
 > mvn clean install
 
 Start the master node using the following command
