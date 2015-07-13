@@ -1,4 +1,4 @@
-Implementation of web crawling with map reduce
+Web crawling with MapReduce
 ============
 
 Introduction
