@@ -1,15 +1,11 @@
 Implementation of web crawling with map reduce
-=============
-
-Acknowledgment
--------
-
-Sequential version of the BFS algorithm and data sets are taken from the book [Algorithms, 4th Edition by Robert Sedgewick and Kevin Wayne](http://algs4.cs.princeton.edu/home/)
+============
 
 Introduction
 -------
 
-Web crawling using MapReduce (Apache Spark, Java7,Crawler4j API(https://github.com/yasserg/crawler4j))
+Web crawling using MapReduce (Apache Spark, Java7,Crawler4j API https://github.com/yasserg/crawler4j)
+Crawled data in form of HTML pages is saved in mongo DB
 
 Installation
 -------
