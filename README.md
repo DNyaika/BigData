@@ -49,30 +49,7 @@ Similarly, you can start one or more workers and connect them to the master via:
 Submiting a spark Job
 bin/spark-submit foldercontainingjar/target/filename.jar
 ```
-
-Start the master node using the following command
-> spark-class org.apache.spark.deploy.master.Master
-
-Start the slave nodes using the following command
-> spark-class org.apache.spark.deploy.worker.Worker spark://{masterIp}:7077
-
-Run the main method of a **it.unitn.bd.bfs.BfsSpark** class
-
-####Run with Spark
-
-Clean-install application with Maven
-> mvn clean install
-
-Start the master node using the following command
-> spark-class org.apache.spark.deploy.master.Master
-
-Start the slave nodes using the following command
-> spark-class org.apache.spark.deploy.worker.Worker spark://{masterIp}:7077
-
-Submit Spark job from the JAR folder
-> spark-submit BFS-wit-hMapReduce-${version}-jar-with-dependencies.jar
-
-Documentation
+####Documentation
 -------
 [BigData Project (PDF)](/docs/BigData_Project.pdf)
 
