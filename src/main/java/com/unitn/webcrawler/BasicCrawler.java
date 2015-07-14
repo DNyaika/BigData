@@ -55,7 +55,7 @@ public class BasicCrawler extends WebCrawler {
         }
 
         // Only accept the url if it is in the "www.ics.uci.edu" domain and protocol is "http".
-        return href.startsWith("http://www.ics.uci.edu/");
+        return href.startsWith("https://en.wikipedia.org/wiki/");
     }
 
     /**
@@ -103,22 +103,4 @@ public class BasicCrawler extends WebCrawler {
         }
         logger.debug("=============");
     }
-
-//    public void storeDownloadedPage(String url, String html) throws UnsupportedEncodingException {
-//        try {
-//            //Mongo DB Client
-//            MongoClient mongo = new MongoClient();
-//
-//            String formatedUrl = url.replace(".", "-");
-//            
-//            // Saving html and url as key to mongoDB
-//            MongoDatabase db = mongo.getDatabase("bigDCourse");
-//            db.getCollection("webpages").insertOne(
-//                    new Document("webpage" + counter,
-//                            new Document()
-//                            .append(formatedUrl, html)));
-//            ++counter;
-//        } catch (MongoException e) {
-//        }
-//    }
 }

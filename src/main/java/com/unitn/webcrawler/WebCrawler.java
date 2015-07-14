@@ -48,14 +48,11 @@ public final class WebCrawler {
                 Iterator it = map.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
-                    System.out.println("Key:::"+pair.getKey() + " = " + pair.getValue());
                     String url = pair.getKey().toString();
                     String html = pair.getValue().toString();                    
                     crawledData.add(new Tuple2<>(url,html));
                     it.remove(); // avoids a ConcurrentModificationException
                 }
-                logger.info("whats up buddy!!!!!XXXXXX");
-                counter++;
                 return crawledData;
             }
         });
@@ -67,8 +64,6 @@ public final class WebCrawler {
                     //Mongo DB Client
                     MongoClient mongo = new MongoClient();
 
-                    logger.info("String 1111111111 " + string1);
-                    logger.info("String 2222222222 " + string2);
                     String formatedUrl = string1.replace(".", "-");
                     String html = string2;
 
@@ -90,7 +85,6 @@ public final class WebCrawler {
         for (Tuple2<?, ?> tuple : output) {
             logger.info("key:::"+tuple._1() + ": " +"Value::::"+tuple._2());
         }
-
         ctx.stop();
     }
 }
