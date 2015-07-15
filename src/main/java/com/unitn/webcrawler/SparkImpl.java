@@ -44,15 +44,22 @@ public final class SparkImpl {
                 Set<Tuple2<String, String>> crawledData = new HashSet<>();
                 CrawlControllerImpl crawlController = new CrawlControllerImpl(s);
                 crawlController.executeController();
-                Map<String, String> map = CrawledDataSource.crawledData;
+                Map<String, String> map = WebCrawlerImpl.crawledData;
+                
                 Iterator it = map.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
                     String url = pair.getKey().toString();
+                    int n = new Random().nextInt();
+                    logger.info("keys"+pair.getKey().toString());
                     String html = pair.getValue().toString();
                     crawledData.add(new Tuple2<>(url, html));
                     it.remove(); // avoids a ConcurrentModificationException
                 }
+                logger.info("map>>"+crawledData);
+                
+                 WebCrawlerImpl.crawledData.clear();//clearing info of previous seed url
+                 
                 return crawledData;
             }
         });
@@ -60,17 +67,17 @@ public final class SparkImpl {
         JavaPairRDD<String, String>  reducer = map.reduceByKey(new Function2<String, String, String>() {
             @Override
             public String call(String string1, String string2) {
-
                 try {
                     //Mongo DB Client
                     MongoClient mongo = new MongoClient();
                     StringBuilder sb = new StringBuilder();
                     Random random = new Random();
-                   logger.info("Reaching here");
+                    
+                   logger.info("Reaching hereXXX");
                     sb.append(string1);
                     sb.append(string2);
                     int n = random.nextInt();
-                    logger.info("Random Number = " + n);
+                    
                    //  Saving html and url as key to mongoDB
                     MongoDatabase db = mongo.getDatabase("bigDCourse");
                     db.getCollection("webpages").insertOne(
@@ -85,10 +92,11 @@ public final class SparkImpl {
             }
         });
 
-        List<Tuple2<String, String>> output = reducer.collect();
+      List<Tuple2<String, String>> output = reducer.collect();
         for (Tuple2<?, ?> tuple : output) {
-            logger.info("key:::" + tuple._1() + ": " + "Value::::" + tuple._2());
+            logger.info("key:::"+tuple._1() + ": " +"Value::::"+tuple._2());
         }
+        
         ctx.stop();
     }
 }

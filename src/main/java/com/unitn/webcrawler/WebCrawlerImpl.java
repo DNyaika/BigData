@@ -29,6 +29,8 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 import org.bson.Document;
 
 /**
@@ -37,7 +39,7 @@ import org.bson.Document;
 public class WebCrawlerImpl extends WebCrawler {
 
     private static final Pattern IMAGE_EXTENSIONS = Pattern.compile(".*\\.(bmp|gif|jpg|png)$");
-    
+    public static Map<String,String> crawledData =new HashMap<>();
     /**
      * You should implement this function to specify whether the given url
      * should be crawled or not (based on your crawling logic).
@@ -90,7 +92,7 @@ public class WebCrawlerImpl extends WebCrawler {
             logger.debug("Html length: {}", html.length());
             logger.debug("Number of outgoing links: {}", links.size());
           
-           CrawledDataSource.crawledData.put(url, html);
+           crawledData.put(url, html);
         }
 
         Header[] responseHeaders = page.getFetchResponseHeaders();
