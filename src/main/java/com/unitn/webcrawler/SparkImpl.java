@@ -13,7 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scala.Tuple2;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public final class SparkImpl {
@@ -33,14 +36,15 @@ public final class SparkImpl {
             }
         });
 
-        JavaPairRDD<String, String> map = urls.flatMapToPair(new PairFlatMapFunction<String, String, String>() {
+        // Mapping URLs and HTMLs for reducer
+        JavaPairRDD<String, Page> map = urls.flatMapToPair(new PairFlatMapFunction<String, String, Page>() {
             @Override
-            public Iterable<Tuple2<String, String>> call(String string) throws Exception {
+            public Iterable<Tuple2<String, Page>> call(String string) throws Exception {
                 CrawlControllerImpl.executeController(string);
-                Set<Tuple2<String, String>> crawledData = new HashSet<>(CrawlControllerImpl.crawledData.size());
+                Set<Tuple2<String, Page>> crawledData = new HashSet<>(CrawlControllerImpl.crawledData.size());
 
                 for (Map.Entry<String, String> pair : CrawlControllerImpl.crawledData.entrySet()) {
-                    crawledData.add(new Tuple2<>(pair.getKey(), pair.getValue()));
+                    crawledData.add(new Tuple2<>(pair.getKey(), new Page(pair.getKey(), pair.getValue())));
                 }
                 logger.info("map:::" + crawledData);
 
@@ -48,15 +52,16 @@ public final class SparkImpl {
             }
         });
 
-        JavaPairRDD<String, String> reducer = map.reduceByKey(new Function2<String, String, String>() {
+        // Saving HTML and URL as key to MongoDB
+        JavaPairRDD<String, Page> reducer = map.reduceByKey(new Function2<Page, Page, Page>() {
             @Override
-            public String call(String string1, String string2) {
-                // Saving html and url as key to MongoDB
+            public Page call(Page page1, Page page2) {
+                Page page = Page.mergePages(page1, page2);
                 new MongoClient().getDatabase("bigDCourse").getCollection("webpages").insertOne(
                         new Document("webpage",
                                 new Document().append(
-                                        String.valueOf(new Random().nextInt()), string1 + string2)));
-                return string2;
+                                        page.getUrl(), page.getHtml())));
+                return page;
             }
         });
 
