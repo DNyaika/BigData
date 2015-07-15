@@ -3,9 +3,9 @@ Web crawling with MapReduce
 
 Introduction
 -------
-Web crawling using MapReduce. Crawler4j API https://github.com/yasserg/crawler4j is used to implement the crawler
+Web crawling using MapReduce. Crawler4j API https://github.com/yasserg/crawler4j is used to implement the crawler.
 
-Crawled data in form of HTML pages is saved in mongodb
+Crawled data in form of HTML pages is saved in mongodb.
 
 Installation
 -------
@@ -14,8 +14,7 @@ Requirements: *JDK 7*, *Maven*, *Spark*
 ####With Maven
 
 ```
-Create a root folder,navigate to that folder and perform the following
-
+# Create a root folder, navigate to that folder and perform the following
 mkdir -p src/main/java
 
 copy > src/main/java/com/unitn/webcrawler/BasicCrawler.java 
@@ -25,7 +24,7 @@ copy > src/main/java/com/unitn/webcrawler/WebCrawler.java
 
 copy > pom.xml
 
-Copy a file to use for data
+# Copy a file to use for data
 cp seedurls
 
 # build the JAR
@@ -101,7 +100,3 @@ Issue the following command to restart mongod:
 
 sudo service mongod restart
 ```
-####Documentation
--------
-[BigData Project (PDF)](/docs/BigData_Project.pdf)
-
