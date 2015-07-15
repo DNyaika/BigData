@@ -19,15 +19,15 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class WebCrawler {
+public final class SparkImpl {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebCrawler.class);
+    private static final Logger logger = LoggerFactory.getLogger(SparkImpl.class);
     private static final Pattern COMMA = Pattern.compile(",");
     static int counter = 0;
 
     public static void main(String[] args) throws Exception {
 
-        SparkConf sparkConf = new SparkConf().setAppName("JavaWordCount").setMaster("local");
+        SparkConf sparkConf = new SparkConf().setAppName("WebCrawler").setMaster("local");
         JavaSparkContext ctx = new JavaSparkContext(sparkConf);
         JavaRDD<String> lines = ctx.textFile("seedurls", 1);
 
@@ -44,46 +44,50 @@ public final class WebCrawler {
                 Set<Tuple2<String, String>> crawledData = new HashSet<>();
                 CrawlControllerImpl crawlController = new CrawlControllerImpl(s);
                 crawlController.executeController();
-                Map<String,String> map =CrawledDataSource.crawledData;
+                Map<String, String> map = CrawledDataSource.crawledData;
                 Iterator it = map.entrySet().iterator();
                 while (it.hasNext()) {
                     Map.Entry pair = (Map.Entry) it.next();
                     String url = pair.getKey().toString();
-                    String html = pair.getValue().toString();                    
-                    crawledData.add(new Tuple2<>(url,html));
+                    String html = pair.getValue().toString();
+                    crawledData.add(new Tuple2<>(url, html));
                     it.remove(); // avoids a ConcurrentModificationException
                 }
                 return crawledData;
             }
         });
-                 
-        JavaPairRDD<String, String> reducer = map.reduceByKey(new Function2<String, String, String>() {
+
+        JavaPairRDD<String, String>  reducer = map.reduceByKey(new Function2<String, String, String>() {
             @Override
             public String call(String string1, String string2) {
+
                 try {
                     //Mongo DB Client
                     MongoClient mongo = new MongoClient();
-
-                    String formatedUrl = string1.replace(".", "-");
-                    String html = string2;
-
-                    // Saving html and url as key to mongoDB
+                    StringBuilder sb = new StringBuilder();
+                    Random random = new Random();
+                   logger.info("Reaching here");
+                    sb.append(string1);
+                    sb.append(string2);
+                    int n = random.nextInt();
+                    logger.info("Random Number = " + n);
+                   //  Saving html and url as key to mongoDB
                     MongoDatabase db = mongo.getDatabase("bigDCourse");
                     db.getCollection("webpages").insertOne(
                             new Document("webpage",
                                     new Document()
-                                    .append(formatedUrl, html)));
+                                    .append(Integer.toString(n), sb)));
 
                 } catch (MongoException e) {
 
-                }
+                } 
                 return string2;
             }
         });
 
         List<Tuple2<String, String>> output = reducer.collect();
         for (Tuple2<?, ?> tuple : output) {
-            logger.info("key:::"+tuple._1() + ": " +"Value::::"+tuple._2());
+            logger.info("key:::" + tuple._1() + ": " + "Value::::" + tuple._2());
         }
         ctx.stop();
     }

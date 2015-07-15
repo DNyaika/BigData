@@ -34,7 +34,7 @@ import org.bson.Document;
 /**
  * @author Yasser Ganjisaffar
  */
-public class BasicCrawler extends WebCrawler {
+public class WebCrawlerImpl extends WebCrawler {
 
     private static final Pattern IMAGE_EXTENSIONS = Pattern.compile(".*\\.(bmp|gif|jpg|png)$");
     
@@ -55,7 +55,7 @@ public class BasicCrawler extends WebCrawler {
         }
 
         // Only accept the url if it is in the "www.ics.uci.edu" domain and protocol is "http".
-        return href.startsWith("https://en.wikipedia.org/wiki/");
+         return href.startsWith("http://www.ics.uci.edu/");
     }
 
     /**
@@ -89,7 +89,6 @@ public class BasicCrawler extends WebCrawler {
             logger.debug("Text length: {}", text.length());
             logger.debug("Html length: {}", html.length());
             logger.debug("Number of outgoing links: {}", links.size());
-            logger.debug("HTML:::::", html);
           
            CrawledDataSource.crawledData.put(url, html);
         }

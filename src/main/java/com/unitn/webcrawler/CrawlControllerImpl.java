@@ -66,13 +66,13 @@ public class CrawlControllerImpl {
          * You can set the maximum crawl depth here. The default value is -1 for
          * unlimited depth
          */
-        config.setMaxDepthOfCrawling(2);
+        config.setMaxDepthOfCrawling(1);
 
         /*
          * You can set the maximum number of pages to crawl. The default value
          * is -1 for unlimited number of pages
          */
-        config.setMaxPagesToFetch(1000);
+        config.setMaxPagesToFetch(2);
 
         /**
          * Do you want crawler4j to crawl also binary data ? example: the
@@ -119,6 +119,6 @@ public class CrawlControllerImpl {
          * Start the crawl. This is a blocking operation, meaning that your code
          * will reach the line after this only when crawling is finished.
          */
-        controller.start(BasicCrawler.class, numberOfCrawlers);
+        controller.start(WebCrawlerImpl.class, numberOfCrawlers);
     }
 }
