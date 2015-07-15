@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * @author Yasser Ganjisaffar
  */
-public class CrawlControllerImpl {
+public abstract class CrawlControllerImpl {
 
     public static final Map<String, String> crawledData = new HashMap<>();
 

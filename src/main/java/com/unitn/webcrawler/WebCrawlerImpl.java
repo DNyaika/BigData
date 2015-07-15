@@ -84,7 +84,7 @@ public class WebCrawlerImpl extends WebCrawler {
             logger.debug("Html length: {}", html.length());
             logger.debug("Number of outgoing links: {}", links.size());
 
-            CrawlControllerImpl.getCrawledData().put(url, html);
+            CrawlControllerImpl.crawledData.put(url, html);
         }
 
         Header[] responseHeaders = page.getFetchResponseHeaders();
