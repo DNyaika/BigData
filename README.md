@@ -5,7 +5,7 @@ Introduction
 -------
 Web crawling using MapReduce. Crawler4j API https://github.com/yasserg/crawler4j is used to implement the crawler.
 
-Crawled data in form of HTML pages is saved in mongodb.
+Crawled data in form of HTML pages is saved in MongoDB.
 
 Installation
 -------
@@ -17,21 +17,20 @@ Requirements: *JDK 7*, *Maven*, *Spark*
 # Create a root folder, navigate to that folder and perform the following
 mkdir -p src/main/java
 
-copy > src/main/java/com/unitn/webcrawler/BasicCrawler.java 
+copy > src/main/java/com/unitn/webcrawler/SparkImpl.java 
+copy > src/main/java/com/unitn/webcrawler/WebCrawlerImpl.java
 copy > src/main/java/com/unitn/webcrawler/CrawlControllerImpl.java 
-copy > src/main/java/com/unitn/webcrawler/CrawledDataSource.java 
-copy > src/main/java/com/unitn/webcrawler/WebCrawler.java
 
 copy > pom.xml
 
 # Copy a file to use for data
-cp seedurls
+copy > seedurls
 
 # build the JAR
 mvn clean package
 
 # run the JAR
-mvn exec:java -Dexec.mainClass="WebCrawler.java"
+mvn exec:java -Dexec.mainClass="SparkImpl.java"
 ```
 
 ####Starting a Cluster Manually

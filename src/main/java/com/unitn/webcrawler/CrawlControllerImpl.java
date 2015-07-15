@@ -33,6 +33,11 @@ public abstract class CrawlControllerImpl {
     public static final Map<String, String> crawledData = new HashMap<>();
 
     public static void executeController(String seedUrl) throws Exception {
+        /**
+         * clearing info of previous seed url
+         */
+        crawledData.clear();
+
         /*
          * crawlStorageFolder is a folder where intermediate crawl data is
          * stored.

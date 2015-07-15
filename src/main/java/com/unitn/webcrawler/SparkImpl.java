@@ -44,9 +44,6 @@ public final class SparkImpl {
                 }
                 logger.info("map:::" + crawledData);
 
-                // clearing info of previous seed url
-                CrawlControllerImpl.crawledData.clear();
-
                 return crawledData;
             }
         });
@@ -55,10 +52,10 @@ public final class SparkImpl {
             @Override
             public String call(String string1, String string2) {
                 // Saving html and url as key to MongoDB
-                new MongoClient().getDatabase("bigDCourse").getCollection("webpages")
-                        .insertOne(
-                                new Document("webpage",
-                                        new Document().append(String.valueOf(new Random().nextInt()), string1 + string2)));
+                new MongoClient().getDatabase("bigDCourse").getCollection("webpages").insertOne(
+                        new Document("webpage",
+                                new Document().append(
+                                        String.valueOf(new Random().nextInt()), string1 + string2)));
                 return string2;
             }
         });
