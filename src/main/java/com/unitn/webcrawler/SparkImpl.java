@@ -1,7 +1,6 @@
 package com.unitn.webcrawler;
 
 import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -36,25 +35,21 @@ public final class SparkImpl {
 
         JavaPairRDD<String, String> map = urls.flatMapToPair(new PairFlatMapFunction<String, String, String>() {
             @Override
-            public Iterable<Tuple2<String, String>> call(String s) throws Exception {
+            public Iterable<Tuple2<String, String>> call(String string) throws Exception {
                 Set<Tuple2<String, String>> crawledData = new HashSet<>();
-                CrawlControllerImpl crawlController = new CrawlControllerImpl(s);
-                crawlController.executeController();
-                Map<String, String> map = WebCrawlerImpl.crawledData;
+                new CrawlControllerImpl(string).executeController();
 
-                Iterator it = map.entrySet().iterator();
+                Iterator it = WebCrawlerImpl.crawledData.entrySet().iterator();
                 while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry) it.next();
-                    String url = pair.getKey().toString();
-                    int n = new Random().nextInt();
-                    logger.info("keys" + pair.getKey().toString());
-                    String html = pair.getValue().toString();
-                    crawledData.add(new Tuple2<>(url, html));
+                    Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
+                    logger.info("keys" + pair.getKey());
+                    crawledData.add(new Tuple2<>(pair.getKey(), pair.getValue()));
                     it.remove(); // avoids a ConcurrentModificationException
                 }
                 logger.info("map>>" + crawledData);
 
-                WebCrawlerImpl.crawledData.clear();//clearing info of previous seed url
+                // clearing info of previous seed url
+                WebCrawlerImpl.crawledData.clear();
 
                 return crawledData;
             }
@@ -63,22 +58,11 @@ public final class SparkImpl {
         JavaPairRDD<String, String> reducer = map.reduceByKey(new Function2<String, String, String>() {
             @Override
             public String call(String string1, String string2) {
-                //Mongo DB Client
-                MongoClient mongo = new MongoClient();
-                StringBuilder sb = new StringBuilder();
-                Random random = new Random();
-
-                logger.info("Reaching hereXXX");
-                sb.append(string1);
-                sb.append(string2);
-                int n = random.nextInt();
-
-                //  Saving html and url as key to mongoDB
-                MongoDatabase db = mongo.getDatabase("bigDCourse");
-                db.getCollection("webpages").insertOne(
+                // Saving html and url as key to MongoDB
+                new MongoClient().getDatabase("bigDCourse").getCollection("webpages").insertOne(
                         new Document("webpage",
                                 new Document()
-                                        .append(Integer.toString(n), sb)));
+                                        .append(String.valueOf(new Random().nextInt()), string1 + string2)));
                 return string2;
             }
         });
