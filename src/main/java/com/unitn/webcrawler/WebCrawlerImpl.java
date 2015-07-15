@@ -57,7 +57,7 @@ public class WebCrawlerImpl extends WebCrawler {
         }
 
         // Only accept the url if it is in the "www.ics.uci.edu" domain and protocol is "http".
-         return href.startsWith("http://www.ics.uci.edu/");
+         return href.startsWith("https://en.wikipedia.org/wiki/");
     }
 
     /**
