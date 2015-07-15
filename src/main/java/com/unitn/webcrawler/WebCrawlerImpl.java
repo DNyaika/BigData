@@ -22,8 +22,6 @@ import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 import org.apache.http.Header;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -33,7 +31,6 @@ import java.util.regex.Pattern;
 public class WebCrawlerImpl extends WebCrawler {
 
     private static final Pattern IMAGE_EXTENSIONS = Pattern.compile(".*\\.(bmp|gif|jpg|png)$");
-    public static Map<String, String> crawledData = new HashMap<>();
 
     /**
      * You should implement this function to specify whether the given url
@@ -87,7 +84,7 @@ public class WebCrawlerImpl extends WebCrawler {
             logger.debug("Html length: {}", html.length());
             logger.debug("Number of outgoing links: {}", links.size());
 
-            crawledData.put(url, html);
+            CrawlControllerImpl.getCrawledData().put(url, html);
         }
 
         Header[] responseHeaders = page.getFetchResponseHeaders();

@@ -22,29 +22,22 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Yasser Ganjisaffar
  */
 public class CrawlControllerImpl {
 
-    private final String seedUrl;
+    public static final Map<String, String> crawledData = new HashMap<>();
 
-    public CrawlControllerImpl(String seedUrl) {
-        this.seedUrl = seedUrl;
-    }
-
-    public void executeController() throws Exception {
+    public static void executeController(String seedUrl) throws Exception {
         /*
          * crawlStorageFolder is a folder where intermediate crawl data is
          * stored.
          */
         String crawlStorageFolder = "/home/david/crawleddata/";
-
-        /*
-         * numberOfCrawlers shows the number of concurrent threads that should
-         * be initiated for crawling.
-         */
-        int numberOfCrawlers = 1;
 
         CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder(crawlStorageFolder);
@@ -105,6 +98,12 @@ public class CrawlControllerImpl {
          * which are found in these pages
          */
         controller.addSeed(seedUrl);
+
+        /*
+         * numberOfCrawlers shows the number of concurrent threads that should
+         * be initiated for crawling.
+         */
+        int numberOfCrawlers = 1;
 
         /*
          * Start the crawl. This is a blocking operation, meaning that your code

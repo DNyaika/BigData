@@ -36,20 +36,16 @@ public final class SparkImpl {
         JavaPairRDD<String, String> map = urls.flatMapToPair(new PairFlatMapFunction<String, String, String>() {
             @Override
             public Iterable<Tuple2<String, String>> call(String string) throws Exception {
-                Set<Tuple2<String, String>> crawledData = new HashSet<>();
-                new CrawlControllerImpl(string).executeController();
+                CrawlControllerImpl.executeController(string);
+                Set<Tuple2<String, String>> crawledData = new HashSet<>(CrawlControllerImpl.crawledData.size());
 
-                Iterator it = WebCrawlerImpl.crawledData.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
-                    logger.info("keys" + pair.getKey());
+                for (Map.Entry<String, String> pair : CrawlControllerImpl.crawledData.entrySet()) {
                     crawledData.add(new Tuple2<>(pair.getKey(), pair.getValue()));
-                    it.remove(); // avoids a ConcurrentModificationException
                 }
-                logger.info("map>>" + crawledData);
+                logger.info("map:::" + crawledData);
 
                 // clearing info of previous seed url
-                WebCrawlerImpl.crawledData.clear();
+                CrawlControllerImpl.crawledData.clear();
 
                 return crawledData;
             }
@@ -59,16 +55,16 @@ public final class SparkImpl {
             @Override
             public String call(String string1, String string2) {
                 // Saving html and url as key to MongoDB
-                new MongoClient().getDatabase("bigDCourse").getCollection("webpages").insertOne(
-                        new Document("webpage",
-                                new Document()
-                                        .append(String.valueOf(new Random().nextInt()), string1 + string2)));
+                new MongoClient().getDatabase("bigDCourse").getCollection("webpages")
+                        .insertOne(
+                                new Document("webpage",
+                                        new Document().append(String.valueOf(new Random().nextInt()), string1 + string2)));
                 return string2;
             }
         });
 
         for (Tuple2<?, ?> tuple : reducer.collect()) {
-            logger.info("key:::" + tuple._1() + ": " + "Value:::" + tuple._2());
+            logger.info("key:::" + tuple._1() + ": " + "value:::" + tuple._2());
         }
 
         ctx.stop();
