@@ -5,9 +5,9 @@
  * licenses this file to You under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,9 +15,6 @@
  * the License.
  */
 package com.unitn.webcrawler;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
@@ -29,24 +26,20 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
  * @author Yasser Ganjisaffar
  */
 public class CrawlControllerImpl {
-    
-    private static final Logger logger = LoggerFactory.getLogger(CrawlControllerImpl.class);
-    
-    private static String seedUrl1;
-    
-    public CrawlControllerImpl(String seedUrl){
-        seedUrl1 = seedUrl;
+
+    private final String seedUrl;
+
+    public CrawlControllerImpl(String seedUrl) {
+        this.seedUrl = seedUrl;
     }
-    
-    public void executeController()throws Exception{
-        
-               /*
+
+    public void executeController() throws Exception {
+        /*
          * crawlStorageFolder is a folder where intermediate crawl data is
          * stored.
          */
         String crawlStorageFolder = "/home/david/crawleddata/";
 
-  
         /*
          * numberOfCrawlers shows the number of concurrent threads that should
          * be initiated for crawling.
@@ -55,7 +48,7 @@ public class CrawlControllerImpl {
 
         CrawlConfig config = new CrawlConfig();
         config.setCrawlStorageFolder(crawlStorageFolder);
-        
+
         /*
          * Be polite: Make sure that we don't send more than 1 request per
          * second (1000 milliseconds between requests).
@@ -104,17 +97,15 @@ public class CrawlControllerImpl {
         PageFetcher pageFetcher = new PageFetcher(config);
         RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
         RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-       CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
+        CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
 
         /*
          * For each crawl, you need to add some seed urls. These are the first
          * URLs that are fetched and then the crawler starts following links
          * which are found in these pages
          */
+        controller.addSeed(seedUrl);
 
-         controller.addSeed(seedUrl1);
-     
-        
         /*
          * Start the crawl. This is a blocking operation, meaning that your code
          * will reach the line after this only when crawling is finished.

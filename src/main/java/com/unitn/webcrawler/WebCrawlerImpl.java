@@ -5,9 +5,9 @@
  * licenses this file to You under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -16,22 +16,16 @@
  */
 package com.unitn.webcrawler;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoException;
-import com.mongodb.client.MongoDatabase;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import org.apache.http.Header;
-
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
-import java.io.UnsupportedEncodingException;
+import org.apache.http.Header;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.bson.Document;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * @author Yasser Ganjisaffar
@@ -39,14 +33,15 @@ import org.bson.Document;
 public class WebCrawlerImpl extends WebCrawler {
 
     private static final Pattern IMAGE_EXTENSIONS = Pattern.compile(".*\\.(bmp|gif|jpg|png)$");
-    public static Map<String,String> crawledData =new HashMap<>();
+    public static Map<String, String> crawledData = new HashMap<>();
+
     /**
      * You should implement this function to specify whether the given url
      * should be crawled or not (based on your crawling logic).
      *
      * @param referringPage
      * @param url
-     * @return 
+     * @return
      */
     @Override
     public boolean shouldVisit(Page referringPage, WebURL url) {
@@ -57,7 +52,7 @@ public class WebCrawlerImpl extends WebCrawler {
         }
 
         // Only accept the url if it is in the "www.ics.uci.edu" domain and protocol is "http".
-         return href.startsWith("http://www.ics.uci.edu/");
+        return href.startsWith("http://www.ics.uci.edu/");
     }
 
     /**
@@ -91,8 +86,8 @@ public class WebCrawlerImpl extends WebCrawler {
             logger.debug("Text length: {}", text.length());
             logger.debug("Html length: {}", html.length());
             logger.debug("Number of outgoing links: {}", links.size());
-          
-           crawledData.put(url, html);
+
+            crawledData.put(url, html);
         }
 
         Header[] responseHeaders = page.getFetchResponseHeaders();
