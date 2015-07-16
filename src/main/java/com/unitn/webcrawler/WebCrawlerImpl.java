@@ -55,6 +55,7 @@ public class WebCrawlerImpl extends WebCrawler {
     /**
      * This function is called when a page is fetched and ready to be processed
      * by your program.
+     * @param page
      */
     @Override
     public void visit(Page page) {

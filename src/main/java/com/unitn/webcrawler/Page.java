@@ -1,9 +1,11 @@
 package com.unitn.webcrawler;
 
+import scala.Serializable;
+
 /**
  * Page stores info of crawled web pages
  */
-public class Page {
+public class Page implements Serializable{
 
     private final String url;
 

@@ -56,11 +56,13 @@ public final class SparkImpl {
         JavaPairRDD<String, Page> reducer = map.reduceByKey(new Function2<Page, Page, Page>() {
             @Override
             public Page call(Page page1, Page page2) {
+                
                 Page page = Page.mergePages(page1, page2);
+                logger.info("here iam dummy!!!!");
                 new MongoClient().getDatabase("bigDCourse").getCollection("webpages").insertOne(
                         new Document("webpage",
                                 new Document().append(
-                                        page.getUrl(), page.getHtml())));
+                                        page.getUrl().replace(".","_"), page.getHtml())));
                 return page;
             }
         });
